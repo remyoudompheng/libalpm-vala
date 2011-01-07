@@ -12,3 +12,4 @@ pmpkg_t* alpm_pkg_load_file(const char *filename, int full)
     }
 }
 
+alpm_list_t *alpm_list_new() { return NULL; }

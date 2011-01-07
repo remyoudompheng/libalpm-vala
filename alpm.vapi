@@ -20,7 +20,7 @@
 [CCode (cprefix = "alpm_", cheader_filename="alpm.h,alpm-vala.h")]
 namespace Alpm {
   /**
-	 * Library
+   * Library
    */
   public int initialize();
   public int release();
@@ -46,10 +46,11 @@ namespace Alpm {
   [CCode (cname = "pmdb_t", cprefix = "alpm_db_")]
   public struct DB {
     public int unregister();
-	  public static void unregister_all();
+    public static void unregister_all();
     public string get_name();
     public string get_url();
-	  public int setserver(string url);
+    public int setserver(string url);
+    public unowned Package? get_pkg(string name);
     public unowned List<Package> get_pkgcache();
   }
 

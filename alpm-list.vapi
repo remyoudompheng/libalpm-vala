@@ -4,6 +4,8 @@ namespace Alpm {
   [CCode (cname = "alpm_list_t", type_parameters = "G")]
   [Compact]
   public class List<G> {
+    [CCode (cname = "alpm_list_new")]
+    public List();
     public delegate int Compare(G a, G b);
 
     /* item mutators */
@@ -15,10 +17,11 @@ namespace Alpm {
     public List<G> nth(int n);
     [CCode (cname = "alpm_list_next")]
     public unowned List<G>? next();
-    public G getdata();
+    public unowned G getdata();
 
     /* misc */
     public int count();
+    public unowned string? find_str(string needle);
   } 
 }
 
