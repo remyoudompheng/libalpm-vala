@@ -11,7 +11,7 @@ static int main(string[] args) {
   DB *db = register_local();
   assert (db != null);
 
-  Package? p = find_satisfier(db->get_pkgcache(), args[1]);
+  unowned Package? p = find_satisfier(db->get_pkgcache(), args[1]);
   assert(p != null); 
 
  /* print depends */

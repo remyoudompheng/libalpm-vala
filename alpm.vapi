@@ -110,7 +110,7 @@ namespace Alpm {
     LT
   }
 
-  public Package? find_satisfier(Alpm.List<Package> pkgs, string depstring);
+  public unowned Package? find_satisfier(Alpm.List<Package> pkgs, string depstring);
 
   [CCode (cname = "pmdepend_t", cprefix = "alpm_dep_")]
   public struct Depend {

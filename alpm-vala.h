@@ -13,3 +13,8 @@ pmpkg_t* alpm_pkg_load_file(const char *filename, int full)
 }
 
 alpm_list_t *alpm_list_new() { return NULL; }
+
+void alpm_list_free_all(alpm_list_t *list) {
+   alpm_list_free_inner(list, free);
+   alpm_list_free(list);
+}

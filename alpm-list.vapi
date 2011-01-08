@@ -1,21 +1,22 @@
 [CCode (cprefix = "alpm_list_", cheader_filename = "alpm_list.h")]
 [Compact]
 namespace Alpm {
-  [CCode (cname = "alpm_list_t", type_parameters = "G")]
+  [CCode (cname = "alpm_list_t", type_parameters = "G",
+          free_function = "alpm_list_free_all")]
   [Compact]
   public class List<G> {
     [CCode (cname = "alpm_list_new")]
-    public static unowned List new();
+    public static List new();
     public delegate int Compare(G a, G b);
 
     /* item mutators */
-    public unowned List<G> add(G data);
+    [ReturnsModifiedPointer ()]
+    public void add(G data);
     public List<G> copy();
 
     /* item accessors */
-    public List<G> first();
-    public List<G> nth(int n);
-    [CCode (cname = "alpm_list_next")]
+    public unowned List<G> first();
+    public unowned List<G> nth(int n);
     public unowned List<G>? next();
     public unowned G getdata();
 

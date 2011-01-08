@@ -36,8 +36,8 @@ string color_off;
 
 /* globals */
 DB* db_local;
-unowned Alpm.List<string> walked;
-unowned Alpm.List<string> provisions;
+Alpm.List<string> walked;
+Alpm.List<string> provisions;
 
 /* options */
 bool color;
@@ -144,10 +144,10 @@ static int main (string[] args) {
   local_init();
   string target_name = args[1];
 
-  Package? pkg = find_satisfier(db_local.get_pkgcache(), target_name);
+  unowned Package? pkg = find_satisfier(db_local.get_pkgcache(), target_name);
   if (pkg == null) {
     stderr.printf("Error: package '%s' not found\n", target_name);
-    // release();
+    release();
     return 1;
   }
 
@@ -160,7 +160,7 @@ static int main (string[] args) {
 
   print_end();
   /* cleanup */
-  // release();
+  release();
   return 0;
 }
 
@@ -192,8 +192,8 @@ static void print_text(string? pkg, string? provision, int depth)
 static void walk_reverse_deps(Package pkg, int depth) {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked = walked.add(pkg.get_name());
-  var required_by = pkg.compute_requiredby();
+  walked.add(pkg.get_name());
+  Alpm.List<string> required_by = pkg.compute_requiredby();
 
   for(unowned Alpm.List<string> i = required_by; i != null; i = i.next()) {
     string pkgname = i.getdata();
@@ -215,11 +215,11 @@ static void walk_deps(Package pkg, int depth)
 {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked = walked.add(pkg.get_name());
+  walked.add(pkg.get_name());
 
   for(unowned Alpm.List<Depend*> i = pkg.get_depends(); i != null; i = i.next()) {
     Depend* depend = i.getdata();
-    Package? provider = find_satisfier(db_local.get_pkgcache(), depend->get_name());
+    unowned Package? provider = find_satisfier(db_local.get_pkgcache(), depend->get_name());
 
     if(provider != null) {
       string provname = provider.get_name();
@@ -247,7 +247,7 @@ static void print_graph(string parentname, string? pkgname, string? depname)
     stdout.printf("\"%s\" -> \"%s\" [color=chocolate4];\n", parentname, depname);
     if((pkgname != null) && (depname != pkgname) && (provisions.find_str(depname) != null)) {
       stdout.printf("\"%s\" -> \"%s\" [arrowhead=none, color=grey];\n", depname, pkgname);
-      provisions = provisions.add(depname);
+      provisions.add(depname);
     }
   } else if(pkgname != null) {
     stdout.printf("\"%s\" -> \"%s\" [color=chocolate4];\n", parentname, pkgname);
