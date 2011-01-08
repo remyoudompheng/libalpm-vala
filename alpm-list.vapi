@@ -5,11 +5,11 @@ namespace Alpm {
   [Compact]
   public class List<G> {
     [CCode (cname = "alpm_list_new")]
-    public List();
+    public static unowned List new();
     public delegate int Compare(G a, G b);
 
     /* item mutators */
-    public List<G> add(G data);
+    public unowned List<G> add(G data);
     public List<G> copy();
 
     /* item accessors */

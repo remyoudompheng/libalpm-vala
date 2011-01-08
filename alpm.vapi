@@ -63,7 +63,6 @@ namespace Alpm {
   public class Package {
     [CCode (cname = "alpm_pkg_load_file")]
     public static unowned Package? load_file([CCode (array_length = false)] char[] filename, int full);
-
     public static int checkmd5sum();
 
     [CCode (cname = "alpm_fetch_pkgurl")]

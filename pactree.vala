@@ -36,8 +36,8 @@ string color_off;
 
 /* globals */
 DB* db_local;
-Alpm.List<string> walked;
-Alpm.List<string> provisions;
+unowned Alpm.List<string> walked;
+unowned Alpm.List<string> provisions;
 
 /* options */
 bool color;
@@ -61,8 +61,8 @@ const OptionEntry[] options = {
 
 static void init_options() {
   /* globals */
-  walked = new Alpm.List <string> ();
-  provisions = new Alpm.List <string> ();
+  walked = Alpm.List<string>.new();
+  provisions = Alpm.List<string>.new();
 
   /* initialize options */
   color = false;
@@ -192,7 +192,7 @@ static void print_text(string? pkg, string? provision, int depth)
 static void walk_reverse_deps(Package pkg, int depth) {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked.add(pkg.get_name());
+  walked = walked.add(pkg.get_name());
   var required_by = pkg.compute_requiredby();
 
   for(unowned Alpm.List<string> i = required_by; i != null; i = i.next()) {
@@ -215,7 +215,7 @@ static void walk_deps(Package pkg, int depth)
 {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked.add(pkg.get_name());
+  walked = walked.add(pkg.get_name());
 
   for(unowned Alpm.List<Depend*> i = pkg.get_depends(); i != null; i = i.next()) {
     Depend* depend = i.getdata();
@@ -247,7 +247,7 @@ static void print_graph(string parentname, string? pkgname, string? depname)
     stdout.printf("\"%s\" -> \"%s\" [color=chocolate4];\n", parentname, depname);
     if((pkgname != null) && (depname != pkgname) && (provisions.find_str(depname) != null)) {
       stdout.printf("\"%s\" -> \"%s\" [arrowhead=none, color=grey];\n", depname, pkgname);
-      provisions.add(depname);
+      provisions = provisions.add(depname);
     }
   } else if(pkgname != null) {
     stdout.printf("\"%s\" -> \"%s\" [color=chocolate4];\n", parentname, pkgname);
