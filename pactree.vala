@@ -193,10 +193,10 @@ static void walk_reverse_deps(Package pkg, int depth) {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
   walked.add(pkg.get_name());
-  Alpm.List<string> required_by = pkg.compute_requiredby();
+  Alpm.List<string?> required_by = pkg.compute_requiredby();
 
-  for(unowned Alpm.List<string> i = required_by; i != null; i = i.next()) {
-    string pkgname = i.getdata();
+  foreach(string? i in required_by) {
+    string pkgname = i;
     if (walked.find_str(pkgname) != null) {
       /* if we've already seen this package, don't print in "unique" output
        * and don't recurse */
@@ -217,8 +217,7 @@ static void walk_deps(Package pkg, int depth)
 
   walked.add(pkg.get_name());
 
-  for(unowned Alpm.List<Depend*> i = pkg.get_depends(); i != null; i = i.next()) {
-    Depend* depend = i.getdata();
+  foreach(Depend* depend in pkg.get_depends()) {
     unowned Package? provider = find_satisfier(db_local.get_pkgcache(), depend->get_name());
 
     if(provider != null) {

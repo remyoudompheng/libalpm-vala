@@ -23,6 +23,14 @@ namespace Alpm {
     /* misc */
     public int count();
     public unowned string? find_str(string needle);
+
+    /* iterator */
+    public Iterator<G> iterator();
+
+    [CCode (cname = "alpm_list_iterator_t", cprefix = "alpm_list_iterator_")]
+    public struct Iterator<G> {
+      public unowned G? next_value();
+    }
   } 
 }
 

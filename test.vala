@@ -17,14 +17,15 @@ static int main(string[] args) {
  /* print depends */
   unowned Alpm.List<Depend*> deps = p.get_depends();
   stdout.printf("%d depends\n", deps.count());
-  for (unowned Alpm.List<Depend*> i = deps; i != null; i = i.next())
-    stdout.puts(i.getdata().compute_string() + "\n");
+  foreach(Depend* i in deps)
+    stdout.puts(i->compute_string() + "\n");
 
   /* print revdeps */
-  Alpm.List<string> revdeps = p.compute_requiredby();
+  Alpm.List<string?> revdeps = p.compute_requiredby();
   stdout.printf("Required by %d packages :\n", revdeps.count());
-  for (unowned Alpm.List<string> i = revdeps; i != null; i = i.next())
-    stdout.puts(i.getdata() + "\n");
+  foreach (string? i in revdeps) {
+    if (i != null) stdout.puts(i + "\n");
+  }
 
   release();
 

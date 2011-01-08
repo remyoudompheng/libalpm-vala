@@ -18,3 +18,22 @@ void alpm_list_free_all(alpm_list_t *list) {
    alpm_list_free_inner(list, free);
    alpm_list_free(list);
 }
+
+typedef struct __alpm_list_iterator_t {
+    alpm_list_t* pos;
+} alpm_list_iterator_t;
+
+void alpm_list_iterator(alpm_list_t *list, alpm_list_iterator_t* i) {
+    i->pos = list;
+}
+
+void* alpm_list_iterator_next_value (alpm_list_iterator_t *iter) {
+    if (iter->pos) {
+        void* result = alpm_list_getdata(iter->pos);
+        iter->pos = alpm_list_next(iter->pos);
+        return result;
+    } else {
+        return NULL;
+    }
+}
+
