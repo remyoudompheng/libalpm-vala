@@ -54,8 +54,8 @@ const OptionEntry[] options = {
   { "depth", 'd', 0, OptionArg.INT, out max_depth, "limit the depth of recursion", "number" },
   { "graph", 'g', 0, OptionArg.NONE, out graphviz, "generate output for graphviz", null },
   { "linear", 'l', 0, OptionArg.NONE, out linear, "enable linear output", null },
-  { "reverse", 'r', 0, OptionArg.NONE, out reverse, "show reverse dependencies with no duplicates (implies -l)", null },
-  { "unique", 'u', 0, OptionArg.NONE, out unique, "show dependencies ", null },
+  { "reverse", 'r', 0, OptionArg.NONE, out reverse, "show reverse dependencies", null },
+  { "unique", 'u', 0, OptionArg.NONE, out unique, "show dependencies with no duplicates (implies -l)", null },
   { null }
 };
 
@@ -109,8 +109,8 @@ static int parse_options(ref unowned string[] args) {
   }
   /* there must be (at least) one argument left */
   if (args.length == 1) return 1;
-  /* reverse implies linear */
-  if (reverse) linear = true;
+  /* unique implies linear */
+  if (unique) linear = true;
 
   /* no color */
   if (!color) {
@@ -147,7 +147,7 @@ static int main (string[] args) {
   Package? pkg = find_satisfier(db_local.get_pkgcache(), target_name);
   if (pkg == null) {
     stderr.printf("Error: package '%s' not found\n", target_name);
-    release();
+    // release();
     return 1;
   }
 
@@ -160,7 +160,7 @@ static int main (string[] args) {
 
   print_end();
   /* cleanup */
-  release();
+  // release();
   return 0;
 }
 
