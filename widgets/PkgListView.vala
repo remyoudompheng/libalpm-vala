@@ -18,9 +18,10 @@
  */
 
 using Gtk;
+using Alpm;
 
-namespace Alpm {
-  class PkgListView : Gtk.TreeView {
+namespace Gtk {
+  public class PkgListView : Gtk.TreeView {
     private ListStore store;
 
     public PkgListView() {

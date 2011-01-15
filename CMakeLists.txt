@@ -13,7 +13,7 @@ Include(FindVala)
 Include(UseVala)
 
 #SET(VALA_COMPILE_FLAGS "--enable-experimental-non-null")
-SET(VALA_COMPILE_FLAGS --enable-checking --fatal-warnings)
+SET(VALA_COMPILE_FLAGS --enable-checking)
 SET(VALA_COMPILE_FLAGS_DEBUG -X -ggdb3)
 
 add_subdirectory(util)
