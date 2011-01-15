@@ -1,4 +1,4 @@
-#include <alpm.h>
+#include "alpm-util.h"
 
 pmpkg_t* alpm_pkg_load_file(const char *filename, int full)
 {
@@ -19,10 +19,6 @@ void alpm_list_free_all(alpm_list_t *list) {
    alpm_list_free(list);
 }
 
-typedef struct __alpm_list_iterator_t {
-    alpm_list_t* pos;
-} alpm_list_iterator_t;
-
 void alpm_list_iterator(alpm_list_t *list, alpm_list_iterator_t* i) {
     i->pos = list;
 }
@@ -36,4 +32,3 @@ void* alpm_list_iterator_next_value (alpm_list_iterator_t *iter) {
         return NULL;
     }
 }
-
