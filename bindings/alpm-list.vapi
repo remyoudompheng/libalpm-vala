@@ -1,4 +1,4 @@
-[CCode (cprefix = "alpm_list_", cheader_filename = "alpm_list.h")]
+[CCode (cprefix = "alpm_list_", cheader_filename = "alpm_list.h,alpm-util.h")]
 [Compact]
 namespace Alpm {
   [CCode (cname = "alpm_list_t", type_parameters = "G",

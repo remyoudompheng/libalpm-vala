@@ -1,7 +1,7 @@
 /*
  * Vala header for libalpm
  *
- *  getright (c) 2011 Rémy Oudompheng <remy@archlinux.org>
+ *  Copyright (c) 2011 Rémy Oudompheng <remy@archlinux.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[CCode (cprefix = "alpm_", cheader_filename="alpm.h,alpm-vala.h")]
+[CCode (cprefix = "alpm_", cheader_filename="alpm.h,alpm-util.h")]
 namespace Alpm {
   /**
    * Library
