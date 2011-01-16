@@ -31,8 +31,34 @@ namespace Alpm {
    */
   [CCode (cprefix = "alpm_option_")]
   namespace Option {
-    public static int set_root(string path);
-    public static int set_dbpath(string dbpath);
+    public unowned string get_root();
+    public int set_root(string path);
+
+    public unowned string get_dbpath();
+    public int set_dbpath(string dbpath);
+
+    public unowned Alpm.List<string> get_cachedirs();
+    public int add_cachedir(string cachedir);
+    public void set_cachedirs(Alpm.List<string> cachedirs);
+    public int remove_cachedir(string cachedir);
+
+    public unowned string get_logfile();
+    public int set_logfile(string logfile);
+
+    public unowned string get_lockfile();
+    /* no set_lockfile, path is determined from dbpath */
+
+    public unowned DB* get_localdb();
+    public unowned Alpm.List<DB> get_syncdbs();
+  }
+
+  /**
+   * Install reasons -- ie, why the package was installed
+   */
+  [CCode (cname = "pmpkgreason_t", cprefix = "PM_PKG_REASON_")]
+  public enum PkgReason {
+    EXPLICIT = 0,
+    DEPEND = 1
   }
 
   /**
@@ -47,9 +73,14 @@ namespace Alpm {
   public struct DB {
     public int unregister();
     public static void unregister_all();
-    public string get_name();
-    public string get_url();
+
+    public unowned string get_name();
+    public unowned string get_url();
+
     public int setserver(string url);
+
+    public int update([CCode (instance_pos = 1.1)] int level);
+
     public unowned Package? get_pkg(string name);
     public unowned List<Package> get_pkgcache();
   }
@@ -93,9 +124,47 @@ namespace Alpm {
     public unowned string get_arch();
     public size_t get_size();
     public size_t get_isize();
-
+    public PkgReason get_reason();
+    public unowned Alpm.List<string> get_licenses();
+    public unowned Alpm.List<string> get_groups();
     public unowned Alpm.List<Depend*> get_depends();
+    public unowned Alpm.List<string> get_optdepends();
+    public unowned Alpm.List<string> get_conflicts();
+    public unowned Alpm.List<string> get_provides();
+    public unowned Alpm.List<string> get_replaces();
+    public unowned Alpm.List<string> get_files();
+    public unowned Alpm.List<string> get_backup();
+    public DB* get_db();
+    // changelog functions
+    public size_t download_size();
   }
+
+  /**
+   * Deltas
+   */
+  [CCode (cname = "pmdelta_t", cprefix = "alpm_delta_")]
+  [Compact]
+  public struct Delta {
+    public unowned string get_from();
+    public unowned string get_to();
+    public unowned string get_filename();
+    public unowned string get_md5sum();
+    public size_t get_size();
+  }
+
+  /**
+   * Groups
+   */
+  [CCode (cname = "pmgrp_t", cprefix = "alpm_grp_")]
+  [Compact]
+  public struct Group {
+    public unowned string get_name();
+    public unowned Alpm.List<Package> get_pkgs();
+  }
+
+  /**
+   * Transactions
+   */
 
   /**
    * Dependencies and conflicts
@@ -119,6 +188,71 @@ namespace Alpm {
     public unowned string get_version();
     public string compute_string();
   }
+
+  /**
+   * Errors
+   */
+  [CCode (cname = "pmerrno_t", cprefix = "PM_ERR_")]
+  public enum Error {
+    MEMORY = 1,
+    SYSTEM,
+    BADPERMS,
+    NOT_A_FILE,
+    NOT_A_DIR,
+    WRONG_ARGS,
+    DISK_SPACE,
+    /* Interface */
+    HANDLE_NULL,
+    HANDLE_NOT_NULL,
+    HANDLE_LOCK,
+    /* Databases */
+    DB_OPEN,
+    DB_CREATE,
+    DB_NULL,
+    DB_NOT_NULL,
+    DB_NOT_FOUND,
+    DB_WRITE,
+    DB_REMOVE,
+    /* Servers */
+    SERVER_BAD_URL,
+    SERVER_NONE,
+    /* Transactions */
+    TRANS_NOT_NULL,
+    TRANS_NULL,
+    TRANS_DUP_TARGET,
+    TRANS_NOT_INITIALIZED,
+    TRANS_NOT_PREPARED,
+    TRANS_ABORT,
+    TRANS_TYPE,
+    TRANS_NOT_LOCKED,
+    /* Packages */
+    PKG_NOT_FOUND,
+    PKG_IGNORED,
+    PKG_INVALID,
+    PKG_OPEN,
+    PKG_CANT_REMOVE,
+    PKG_INVALID_NAME,
+    PKG_INVALID_ARCH,
+    PKG_REPO_NOT_FOUND,
+    /* Deltas */
+    DLT_INVALID,
+    DLT_PATCHFAILED,
+    /* Dependencies */
+    UNSATISFIED_DEPS,
+    CONFLICTING_DEPS,
+    FILE_CONFLICTS,
+    /* Misc */
+    RETRIEVE,
+    WRITE,
+    INVALID_REGEX,
+    /* External library errors */
+    LIBARCHIVE,
+    LIBFETCH,
+    EXTERNAL_DOWNLOAD
+  }
+
+  [CCode (cname = "pm_errno")]
+  public extern Error errno;
 }
 
 /* vim: set ts=2 sw=2 noet: */
