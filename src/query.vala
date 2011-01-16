@@ -16,7 +16,7 @@ static int main(string[] args) {
 
   /* main window */
   Window win = new Window();
-  win.add(view);
+  win.add(view.widget);
   win.destroy.connect(Gtk.main_quit);
   win.show_all();
 

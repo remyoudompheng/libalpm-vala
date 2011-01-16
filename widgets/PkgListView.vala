@@ -23,6 +23,7 @@ using Alpm;
 namespace Gtk {
   public class PkgListView : Gtk.TreeView {
     private ListStore store;
+    public ScrolledWindow widget;
 
     public PkgListView() {
       store = new ListStore (Columns.N_COLUMNS, typeof(string), typeof(string), typeof(int), typeof(int));
@@ -61,6 +62,11 @@ namespace Gtk {
       this.append_column (column);
  
       this.set_headers_visible (true);
+
+      /* set up a container widget */
+      widget = new ScrolledWindow(null, null);
+      widget.set_policy(PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
+      widget.add(this);
     }
 
     private enum Columns {
