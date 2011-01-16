@@ -35,6 +35,7 @@ namespace Gtk {
       column.title = "Name";
       column.pack_start (cell, true);
       column.add_attribute (cell, "text", Columns.NAME);
+      column.sort_column_id = Columns.NAME;
       this.append_column (column);
 
       /* version column */
@@ -51,16 +52,17 @@ namespace Gtk {
       column.title = "Installed size";
       column.pack_start (cell, true);
       column.add_attribute (cell, "text", Columns.ISIZE);
+      column.sort_column_id = Columns.ISIZE;
       this.append_column (column);
 
-      /* size column */
+      /* download size column */
       cell = new CellRendererText ();
       column = new TreeViewColumn ();
       column.title = "Download size";
       column.pack_start (cell, true);
-      column.add_attribute (cell, "text", Columns.SIZE);
+      column.add_attribute (cell, "text", Columns.DSIZE);
       this.append_column (column);
- 
+
       this.set_headers_visible (true);
 
       /* set up a container widget */
@@ -72,8 +74,8 @@ namespace Gtk {
     private enum Columns {
       NAME,
       VERSION,
-      SIZE,
       ISIZE,
+      DSIZE,
       N_COLUMNS
     }
 

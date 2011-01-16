@@ -135,7 +135,7 @@ namespace Alpm {
     public unowned Alpm.List<string> get_files();
     public unowned Alpm.List<string> get_backup();
     public DB* get_db();
-    // changelog functions
+    /* TODO: changelog functions */
     public size_t download_size();
 
     /* properties */
