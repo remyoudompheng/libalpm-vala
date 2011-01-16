@@ -36,6 +36,7 @@ static int main(string[] args) {
 
   /* main window */
   Window win = new Window();
+  win.set_default_size(800,600);
   win.add(view.widget);
   win.destroy.connect(Gtk.main_quit);
   win.show_all();
