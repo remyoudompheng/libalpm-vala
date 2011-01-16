@@ -1,7 +1,7 @@
 /*
- *  pactree.c - a simple dependency tree viewer
+ *  pactree.vala - a simple dependency tree viewer translated in Vala
  *
- *  Copyright (c) 2010 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2010-2011 Pacman Development Team <pacman-dev@archlinux.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

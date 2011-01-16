@@ -1,5 +1,6 @@
 /*
- * Vala header for libalpm
+ * libalpm-vala
+ * Vala bindings and GUI for libalpm
  *
  *  Copyright (c) 2011 Rémy Oudompheng <remy@archlinux.org>
  *
