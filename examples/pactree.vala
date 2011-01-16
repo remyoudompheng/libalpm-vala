@@ -152,7 +152,7 @@ static int main (string[] args) {
   }
 
   /* begin writing */
-  print_start(pkg.get_name(), target_name);
+  print_start(pkg.name, target_name);
   if(reverse)
     walk_reverse_deps(pkg, 1);
   else
@@ -192,7 +192,7 @@ static void print_text(string? pkg, string? provision, int depth)
 static void walk_reverse_deps(Package pkg, int depth) {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked.add(pkg.get_name());
+  walked.add(pkg.name);
   Alpm.List<string?> required_by = pkg.compute_requiredby();
 
   foreach(string? i in required_by) {
@@ -200,9 +200,9 @@ static void walk_reverse_deps(Package pkg, int depth) {
     if (walked.find_str(pkgname) != null) {
       /* if we've already seen this package, don't print in "unique" output
        * and don't recurse */
-      if (!unique) print(pkg.get_name(), pkgname, null, depth);
+      if (!unique) print(pkg.name, pkgname, null, depth);
     } else {
-      print(pkg.get_name(), pkgname, null, depth);
+      print(pkg.name, pkgname, null, depth);
       walk_reverse_deps(db_local.get_pkg(pkgname), depth + 1);
     }
   }
@@ -215,7 +215,7 @@ static void walk_deps(Package pkg, int depth)
 {
   if((max_depth >= 0) && (depth > max_depth)) return;
 
-  walked.add(pkg.get_name());
+  walked.add(pkg.name);
 
   foreach(Depend* depend in pkg.get_depends()) {
     unowned Package? provider = find_satisfier(db_local.get_pkgcache(), depend->get_name());
@@ -227,15 +227,15 @@ static void walk_deps(Package pkg, int depth)
 	/* if we've already seen this package, don't print in "unique" output
 	 * and don't recurse */
 	if(!unique) {
-	  print(pkg.get_name(), provname, depend->get_name(), depth);
+	  print(pkg.name, provname, depend->get_name(), depth);
 	}
       } else {
-	print(pkg.get_name(), provname, depend->get_name(), depth);
+	print(pkg.name, provname, depend->get_name(), depth);
 	walk_deps(provider, depth + 1);
       }
     } else {
       /* unresolvable package */
-      print(pkg.get_name(), null, depend->get_name(), depth);
+      print(pkg.name, null, depend->get_name(), depth);
     }
   }
 }

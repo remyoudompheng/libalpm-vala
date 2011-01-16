@@ -137,6 +137,12 @@ namespace Alpm {
     public DB* get_db();
     // changelog functions
     public size_t download_size();
+
+    /* properties */
+    public string filename { get; }
+    public string name { get; }
+    public string version { get; }
+    public size_t size { get; }
   }
 
   /**

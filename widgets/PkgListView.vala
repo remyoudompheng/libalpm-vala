@@ -78,10 +78,10 @@ namespace Gtk {
         TreeIter iter;
         store.append(out iter);
 	store.set(iter,
-		  Columns.NAME, p.get_name(),
-		  Columns.VERSION, p.get_version(),
-		  Columns.SIZE, p.get_size(),
-		  Columns.ISIZE, p.get_isize());
+		  Columns.NAME, p.name,
+		  Columns.VERSION, p.version,
+		  Columns.ISIZE, p.size,
+		  Columns.DSIZE, p.download_size());
       }
     }
   }
